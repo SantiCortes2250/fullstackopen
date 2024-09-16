@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document for SPA
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: the JavaScript file for SPA
+    deactivate server
+
+    Note right of browser: The browser starts executing the SPA JavaScript
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: The SPA renders the notes without reloading the page
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note (after user input)
+    activate server
+    Note left of server: New note data sent: { "content": "User input", "date": "2024-09-16" }
+    server-->>browser: Acknowledgement of saved note
+    deactivate server
+
+    Note right of browser: The SPA updates the UI with the new note without reloading the page
